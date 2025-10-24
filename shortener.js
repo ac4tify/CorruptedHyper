@@ -31,4 +31,21 @@ btn.addEventListener("click", async () => {
       const data = await res.json();
       shortLink = data.ok ? data.result.full_short_link : "";
     } else if(service === "clckru") {
-      const res = await fetch(`
+      const res = await fetch(`https://clck.ru/--?url=${encodeURIComponent(link)}`);
+      shortLink = await res.text();
+    } else {
+      alert("Unknown shortener service");
+      return;
+    }
+
+    if(!shortLink) throw new Error("Error shortening the link");
+
+    // Creează link-ul final în funcție de tip
+    let finalLink = `[${link}](${shortLink})`;
+    resultDiv.innerText = finalLink;
+
+  } catch(err) {
+    console.error(err);
+    resultDiv.innerText = "Error shortening the link";
+  }
+});

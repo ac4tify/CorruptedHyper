@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CorruptedV2 • Link Shortener Hub</title>
+<title>CorruptedV1 • Link Shortener Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Anton', sans-serif; }
@@ -18,9 +18,11 @@ h1 { font-size:4rem; margin-top:40px; color:white; animation: glow 1.5s ease-in-
 .shortener-buttons { display:flex; flex-direction:column; gap:15px; margin-bottom:40px; align-items:center; }
 .shortener-btn {
   padding:15px 30px; border:2px solid #fff; border-radius:10px;
-  background:rgba(255,255,255,0); color:white; font-weight:bold;
+  background:rgba(255,0,0,0.3); color:white; font-weight:bold;
   cursor:pointer; font-size:1.3rem; width:250px;
+  transition: 0.3s;
 }
+.shortener-btn:hover { background:rgba(255,0,0,0.6); }
 .recommended { color:red; font-size:0.8rem; display:block; margin-top:5px; }
 .discord-btn {
   margin-top:20px; padding:12px 25px; border:2px solid #fff; border-radius:10px;
@@ -31,7 +33,7 @@ h1 { font-size:4rem; margin-top:40px; color:white; animation: glow 1.5s ease-in-
 </head>
 <body>
 
-<h1>CorruptedV2</h1>
+<h1>CorruptedV1</h1>
 <div class="description">Click a shortener to open its menu</div>
 
 <div class="shortener-buttons">

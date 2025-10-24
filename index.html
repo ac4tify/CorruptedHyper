@@ -17,16 +17,28 @@ h1 { font-size:4rem; margin-top:40px; color:white; animation: glow 1.5s ease-in-
 .description { margin-bottom:40px; font-size:1rem; color:white; }
 .shortener-buttons { display:flex; flex-direction:column; gap:15px; margin-bottom:40px; align-items:center; }
 .shortener-btn {
-  padding:15px 30px; border:2px solid #fff; border-radius:10px;
-  background:rgba(255,0,0,0.3); color:white; font-weight:bold;
-  cursor:pointer; font-size:1.3rem; width:250px;
-  transition: 0.3s;
+  padding:15px 30px; 
+  border:2px solid #fff; 
+  border-radius:10px;
+  background: rgba(255,0,0,0.2); /* faded red */
+  color:white; /* text alb */
+  font-weight:bold;
+  cursor:pointer; 
+  font-size:1.3rem; 
+  width:250px;
+  transition:0.3s;
 }
-.shortener-btn:hover { background:rgba(255,0,0,0.6); }
-.recommended { color:red; font-size:0.8rem; display:block; margin-top:5px; }
+.shortener-btn:hover { background: rgba(255,0,0,0.5); } /* hover mai intens */
+.recommended { color: red; font-size:0.8rem; display:block; margin-top:5px; } /* doar Is.gd */
 .discord-btn {
-  margin-top:20px; padding:12px 25px; border:2px solid #fff; border-radius:10px;
-  background:rgba(255,255,255,0.2); color:white; font-size:1.2rem; text-decoration:none;
+  margin-top:20px; 
+  padding:12px 25px; 
+  border:2px solid #fff; 
+  border-radius:10px;
+  background:rgba(255,255,255,0.2); 
+  color:white; 
+  font-size:1.2rem; 
+  text-decoration:none;
 }
 .banner { margin-top:20px; }
 </style>
@@ -45,7 +57,7 @@ h1 { font-size:4rem; margin-top:40px; color:white; animation: glow 1.5s ease-in-
   <button class="shortener-btn" onclick="openShortener('dagd')">Da.gd</button>
 </div>
 
-<a class="discord-btn" href="https://discord.gg/JeXsAxY6e" target="_blank">Our Discord Server</a>
+<a class="discord-btn" href="https://discord.gg/JeXsAxY6e" target="_blank">Join Our Discord</a>
 <img class="banner" src="https://i.imgur.com/8RCzmp3.gif" alt="Banner">
 
 <script>

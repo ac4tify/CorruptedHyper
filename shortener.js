@@ -1,3 +1,4 @@
+// shortener.js
 const input = document.getElementById("userLink");
 const typeSelect = document.getElementById("linkType");
 const resultDiv = document.getElementById("result");
@@ -12,7 +13,7 @@ btn.addEventListener("click", async () => {
   if (!service) return alert("No shortener selected!");
 
   try {
-    const res = await fetch("/api/shorten.js", {  // endpoint API
+    const res = await fetch("/api/shorten", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ service, url: link })
@@ -21,10 +22,9 @@ btn.addEventListener("click", async () => {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
-    let finalLink = `[${link}](${data.shortLink})`;
+    const finalLink = `[${link}](${data.shortLink})`;
     resultDiv.innerText = finalLink;
-
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     resultDiv.innerText = "Error shortening the link";
   }

@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
@@ -29,4 +27,14 @@ export default async function handler(req, res) {
       const r = await fetch(`https://clck.ru/--?url=${encodeURIComponent(url)}`);
       shortLink = await r.text();
     } else {
-      return res.status(400).json({ error:
+      return res.status(400).json({ error: "Unknown shortener service" });
+    }
+
+    if(!shortLink || shortLink.length < 5) return res.status(500).json({ error: "Error shortening the link" });
+
+    res.status(200).json({ shortLink });
+  } catch(e) {
+    console.error(e);
+    res.status(500).json({ error: "Server error" });
+  }
+}

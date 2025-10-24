@@ -1,69 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Corrupted Shortener</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: url('https://i.pinimg.com/736x/b8/de/83/b8de835f42cfdf8c8e10e453efcb380e.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      font-weight: 700;
-      margin-top: 50px;
-      color: #ffffff;
-      text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
-    }
-
-    .shorteners {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      margin-top: 40px;
-    }
-
-    .btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 0, 0, 0.7);
-      border-radius: 10px;
-      padding: 12px 25px;
-      width: 280px;
-      color: white;
-      text-decoration: none;
-      font-size: 1.2em;
-      backdrop-filter: blur(10px);
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: rgba(255, 0, 0, 0.3);
-      transform: scale(1.05);
-    }
-
-    .recommended {
-      color: #ff4c4c;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CorruptedV2 • Link Shortener Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Anton', sans-serif; }
+body {
+  min-height: 100vh;
+  background: url('https://i.pinimg.com/736x/b8/de/83/b8de835f42cfdf8c8e10e453efcb380e.jpg') no-repeat center center/cover fixed;
+  display:flex; flex-direction:column; align-items:center; color:white; text-align:center;
+}
+h1 { font-size:4rem; margin-top:40px; color:white; animation: glow 1.5s ease-in-out infinite alternate; }
+@keyframes glow { 0% {text-shadow: 0 0 5px #fff;} 100% {text-shadow: 0 0 20px #fff;} }
+.description { margin-bottom:40px; font-size:1rem; color:white; }
+.shortener-buttons { display:flex; flex-direction:column; gap:15px; margin-bottom:40px; align-items:center; }
+.shortener-btn {
+  padding:15px 30px; border:2px solid #fff; border-radius:10px;
+  background:rgba(255,255,255,0); color:white; font-weight:bold;
+  cursor:pointer; font-size:1.3rem; width:250px;
+}
+.recommended { color:red; font-size:0.8rem; display:block; margin-top:5px; }
+.discord-btn {
+  margin-top:20px; padding:12px 25px; border:2px solid #fff; border-radius:10px;
+  background:rgba(255,255,255,0.2); color:white; font-size:1.2rem; text-decoration:none;
+}
+.banner { margin-top:20px; }
+</style>
 </head>
 <body>
-  <h1>Corrupted Shortener</h1>
 
-  <div class="shorteners">
-    <a href="shortener.html?service=isgd" class="btn"><span class="recommended">is.gd (Recommended)</span></a>
-    <a href="shortener.html?service=vgd" class="btn">v.gd</a>
-    <a href="shortener.html?service=tinyurl" class="btn">TinyURL</a>
-    <a href="shortener.html?service=dagd" class="btn">da.gd</a>
-    <a href="shortener.html?service=shrtco" class="btn">shrtco.de</a>
-    <a href="shortener.html?service=clckru" class="btn">clck.ru</a>
-  </div>
+<h1>CorruptedV2</h1>
+<div class="description">Click a shortener to open its menu</div>
+
+<div class="shortener-buttons">
+  <button class="shortener-btn" onclick="openShortener('isgd')">Is.gd<span class="recommended">Recommended</span></button>
+  <button class="shortener-btn" onclick="openShortener('tinyurl')">TinyURL</button>
+  <button class="shortener-btn" onclick="openShortener('shrtco')">shrtco.de</button>
+  <button class="shortener-btn" onclick="openShortener('clckru')">Click.ru</button>
+  <button class="shortener-btn" onclick="openShortener('vgd')">v.gd</button>
+  <button class="shortener-btn" onclick="openShortener('dagd')">Da.gd</button>
+</div>
+
+<a class="discord-btn" href="https://discord.gg/JeXsAxY6e" target="_blank">Our Discord Server</a>
+<img class="banner" src="https://i.imgur.com/8RCzmp3.gif" alt="Banner">
+
+<script>
+function openShortener(service){
+  window.location.href = `shortener.html?service=${service}`;
+}
+</script>
 </body>
 </html>

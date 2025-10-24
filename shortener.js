@@ -1,31 +1,31 @@
-document.getElementById("generateBtn").addEventListener("click", async () => {
-  const userLink = document.getElementById("userLink").value.trim();
-  const service = document.getElementById("linkType").value;
-  const resultDiv = document.getElementById("result");
+const params = new URLSearchParams(window.location.search);
+const service = params.get("service")?.toLowerCase();
 
-  if (!userLink) {
-    resultDiv.textContent = "⚠️ Please enter a valid link.";
-    return;
-  }
+const input = document.getElementById("userLink");
+const typeSelect = document.getElementById("linkType");
+const resultDiv = document.getElementById("result");
+const btn = document.getElementById("generateBtn");
 
-  resultDiv.textContent = "⏳ Generating link...";
+btn.addEventListener("click", async () => {
+  const link = input.value.trim();
+  const type = typeSelect.value;
+  if(!link) return alert("Please paste a link!");
 
   try {
-    // 🔗 Trimite cererea către API-ul tău Vercel
-    const response = await fetch(`/api/shorten`, {
+    const res = await fetch(`/api/shorten`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ service, url: userLink }),
+      body: JSON.stringify({ service, url: link })
     });
 
-    const data = await response.json();
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
 
-    if (response.ok && data.shortLink) {
-      resultDiv.innerHTML = `✅ Shortened link:<br><a href="${data.shortLink}" target="_blank">${data.shortLink}</a>`;
-    } else {
-      resultDiv.textContent = `❌ Error: ${data.error || "Could not shorten link."}`;
-    }
-  } catch (err) {
-    resultDiv.textContent = "❌ Network or server error.";
+    const finalLink = `[${link}](${data.shortLink})`;
+    resultDiv.innerText = finalLink;
+
+  } catch(err) {
+    console.error(err);
+    resultDiv.innerText = "Error shortening the link";
   }
 });

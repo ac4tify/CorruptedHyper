@@ -7,17 +7,60 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Share Tech Mono', monospace; }
-body { min-height:100vh; background:url('https://i.pinimg.com/originals/f7/9f/be/f79fbeb840c88aa01ec0ad5199835e89.gif') no-repeat center center/cover fixed; display:flex; flex-direction:column; align-items:center; color:white; text-align:center; }
-h1 { font-size:4rem; margin-top:40px; color:red; animation: slideAnim 2s infinite alternate; }
-@keyframes slideAnim { 0%{transform:translateY(0);}50%{transform:translateY(-5px);}100%{transform:translateY(0);} }
+body {
+  min-height:100vh;
+  background:url('https://i.pinimg.com/originals/f7/9f/be/f79fbeb840c88aa01ec0ad5199835e89.gif') no-repeat center center/cover fixed;
+  display:flex; flex-direction:column; align-items:center; color:white; text-align:center;
+}
+h1 {
+  font-size:4rem;
+  margin-top:40px;
+  color:#ff0000;
+  animation:pulse 1.5s infinite alternate;
+}
+@keyframes pulse {
+  from { transform:scale(1); opacity:0.8; }
+  to { transform:scale(1.05); opacity:1; }
+}
 .description { margin:15px 0 40px 0; font-size:1rem; color:#fff; }
-.container { background: rgba(0,0,0,0.2); border:2px solid #fff; border-radius:15px; padding:30px; display:flex; flex-direction:column; align-items:center; gap:15px; width:320px; margin:0 auto; }
-input, select, button { width:100%; padding:10px 15px; border:2px solid #fff; border-radius:10px; background: transparent; color:#fff; font-size:1rem; text-align:center; }
-button { font-size:1.2rem; cursor:pointer; transition: background 0.3s, opacity 0.3s; }
-button:hover { background: rgba(255,255,255,0.05); opacity:0.9; }
-#result { margin-top:15px; font-size:1rem; color:#fff; word-wrap:break-word; text-align:center; border:2px solid #fff; border-radius:10px; background: rgba(255,255,255,0.1); padding:10px; }
-.discord-btn { margin-top:20px; padding:12px 25px; border:2px solid #fff; border-radius:10px; background:transparent; color:#fff; font-size:1.2rem; text-decoration:none; }
-.discord-btn:hover { background: rgba(255,255,255,0.05); opacity:0.9; }
+.container {
+  background:rgba(0,0,0,0.4);
+  border:2px solid #ff0000;
+  border-radius:15px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:15px;
+  width:320px;
+}
+input, select, button {
+  width:100%;
+  padding:10px 15px;
+  border:2px solid #ff0000;
+  border-radius:10px;
+  background:transparent;
+  color:#fff;
+  font-size:1rem;
+  text-align:center;
+}
+button { font-size:1.2rem; cursor:pointer; }
+button:hover { background:rgba(255,0,0,0.2); }
+#result {
+  margin-top:15px;
+  font-size:1rem;
+  color:#fff;
+  word-wrap:break-word;
+  text-align:center;
+  border:2px solid #ff0000;
+  border-radius:10px;
+  background:rgba(255,0,0,0.1);
+  padding:10px;
+}
+.discord-btn {
+  margin-top:20px; padding:12px 25px; border:2px solid #fff; border-radius:10px;
+  background:rgba(255,255,255,0.1); color:#fff; font-size:1.2rem; text-decoration:none;
+}
 .banner { margin-top:20px; }
 </style>
 </head>

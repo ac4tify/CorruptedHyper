@@ -8,30 +8,30 @@ export default async function handler(req, res) {
 
   try {
     let shortLink = "";
-
-    // Asigurăm compatibilitatea pentru Private Server
     let actualService = service;
-    if (url.includes("?") && (service === "isgd" || service === "vgd")) {
-      actualService = "shrtco"; // folosește shrtco pentru link-uri cu parametri
+
+    // Forțăm shrtco pentru Private Server sau URL-uri cu query
+    if (url.includes("?") || url.includes("share?code")) {
+      actualService = "shrtco";
     }
 
-    if (actualService === "isgd") {
+    if(actualService === "isgd") {
       const r = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`);
       shortLink = await r.text();
-    } else if (actualService === "vgd") {
+    } else if(actualService === "vgd") {
       const r = await fetch(`https://v.gd/create.php?format=simple&url=${encodeURIComponent(url)}`);
       shortLink = await r.text();
-    } else if (actualService === "tinyurl") {
+    } else if(actualService === "tinyurl") {
       const r = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`);
       shortLink = await r.text();
-    } else if (actualService === "dagd") {
+    } else if(actualService === "dagd") {
       const r = await fetch(`https://da.gd/s?url=${encodeURIComponent(url)}`);
       shortLink = await r.text();
-    } else if (actualService === "shrtco") {
+    } else if(actualService === "shrtco") {
       const r = await fetch(`https://api.shrtco.de/v2/shorten?url=${encodeURIComponent(url)}`);
       const data = await r.json();
       shortLink = data.ok ? data.result.full_short_link : "";
-    } else if (actualService === "clckru") {
+    } else if(actualService === "clckru") {
       const r = await fetch(`https://clck.ru/--?url=${encodeURIComponent(url)}`);
       shortLink = await r.text();
     } else {

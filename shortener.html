@@ -1,86 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shorten Your Link</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: url('https://i.pinimg.com/736x/b8/de/83/b8de835f42cfdf8c8e10e453efcb380e.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding-top: 60px;
-    }
-
-    h1 {
-      color: white;
-      text-shadow: 0 0 15px #ffffff;
-    }
-
-    input {
-      width: 70%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      margin-top: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1em;
-      text-align: center;
-      backdrop-filter: blur(10px);
-    }
-
-    button {
-      margin-top: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.6);
-      border-radius: 10px;
-      color: white;
-      font-size: 1em;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    #result {
-      margin-top: 30px;
-      font-size: 1.1em;
-      color: #fff;
-      text-shadow: 0 0 8px #ffffff;
-    }
-
-    .actions {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .actions button {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid #fff;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CorruptedV2 • Shortener</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Anton', sans-serif; }
+body { min-height:100vh; background:url('https://i.pinimg.com/736x/b8/de/83/b8de835f42cfdf8c8e10e453efcb380e.jpg') no-repeat center center/cover fixed; display:flex; flex-direction:column; align-items:center; color:white; text-align:center; }
+h1 { font-size:4rem; margin-top:40px; color:white; animation: glow 1.5s ease-in-out infinite alternate; }
+@keyframes glow { 0% {text-shadow:0 0 5px #fff;} 100% {text-shadow:0 0 20px #fff;} }
+.description { margin:15px 0 40px 0; font-size:1rem; color:white; }
+.container { background:rgba(0,0,0,0.3); border:2px solid #fff; border-radius:15px; padding:30px; display:flex; flex-direction:column; align-items:center; gap:15px; width:320px; margin:0 auto; }
+input, select, button { width:100%; padding:10px 15px; border:2px solid #fff; border-radius:10px; background:rgba(255,255,255,0.2); color:white; font-size:1rem; text-align:center; }
+button { font-size:1.2rem; cursor:pointer; }
+#result { margin-top:15px; font-size:1rem; color:white; word-wrap:break-word; text-align:center; border:2px solid #fff; border-radius:10px; background:rgba(255,255,255,0.1); padding:10px; }
+.copy-btn { margin-top:10px; padding:8px 15px; border:none; border-radius:8px; cursor:pointer; background:#fff; color:#000; font-weight:bold; }
+</style>
 </head>
 <body>
-  <h1>Shorten Your Link</h1>
-  <input id="userLink" placeholder="Paste your Roblox link here">
+
+<h1>CorruptedV2</h1>
+<div class="description">Paste your link, choose type, and press Generate</div>
+
+<div class="container">
+  <input type="text" id="userLink" placeholder="Paste your link here">
+  <select id="linkType">
+    <option value="profile">Profile</option>
+    <option value="group">Group</option>
+    <option value="private">Private Server</option>
+  </select>
   <button id="generateBtn">Generate</button>
+  <div id="result">Your shortened link will appear here</div>
+  <button class="copy-btn" id="copyBtn">Copy Link</button>
+</div>
 
-  <div id="result"></div>
-  <div class="actions" style="display:none;">
-    <button id="copyBtn">Copy Link</button>
-    <button id="viewBtn">View</button>
-  </div>
-
-  <script src="shortener.js"></script>
+<script src="shortener.js"></script>
 </body>
 </html>

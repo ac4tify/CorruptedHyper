@@ -2,58 +2,39 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CorruptedV1 • Shortener</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<title>Corrupted - Generate Link</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Anton', sans-serif; }
-body { 
-  min-height:100vh; 
-  background:url('https://i.pinimg.com/originals/01/cf/fb/01cffb14ea56c91a4cee3b945f00701e.gif') no-repeat center center/cover fixed; 
-  display:flex; flex-direction:column; align-items:center; color:white; text-align:center; 
-}
-h1 { font-size:4rem; margin-top:40px; color:white; animation: glow 1.5s ease-in-out infinite alternate; }
-@keyframes glow { 0% {text-shadow: 0 0 5px #fff;} 100% {text-shadow: 0 0 20px #fff;} }
-.description { margin:15px 0 20px 0; font-size:1rem; color:white; }
-.container { 
-  background:rgba(0,0,0,0); /* complet transparent */ 
-  border:2px solid #fff; border-radius:15px; padding:30px; 
-  display:flex; flex-direction:column; align-items:center; gap:15px; width:350px; margin:0 auto; 
-}
-input, select, button { 
-  width:100%; padding:10px 15px; border:2px solid #fff; border-radius:10px; 
-  background:rgba(0,0,0,0); /* complet transparent */ 
-  color:white; font-size:1rem; text-align:center; 
-}
-button { font-size:1.2rem; cursor:pointer; background:rgba(255,255,255,0.1); transition:0.3s; color:white; }
-button:hover { background:rgba(255,255,255,0.2); }
-#result { 
-  margin-top:15px; font-size:1rem; color:white; word-wrap:break-word; text-align:center; 
-  border:2px solid #fff; border-radius:10px; background:rgba(0,0,0,0); padding:10px; 
-}
-.discord-btn { margin-top:20px; padding:12px 25px; border:2px solid #fff; border-radius:10px; background:rgba(255,255,255,0.2); color:white; font-size:1.2rem; text-decoration:none; }
-.banner { margin-top:20px; }
+body{font-family:Arial, sans-serif;background:#000;color:#fff;text-align:center;padding-top:100px;}
+input{padding:10px;width:60%;margin-bottom:10px;border-radius:10px;border:2px solid #ccc;font-size:16px;}
+button{padding:10px 20px;border-radius:15px;background:#000;border:2px solid #ccc;color:#fff;font-size:16px;cursor:pointer;transition:0.3s;}
+button:hover{border-color:red;transform:scale(1.05);}
+#result{margin-top:20px;font-size:18px;}
 </style>
 </head>
 <body>
 
-<h1>CorruptedV1</h1>
-<div class="description">Paste your link, select type, and press Generate</div>
+<h2 id="site-name">Site</h2>
+<input type="text" id="url" placeholder="Paste your link here">
+<button id="generate">Generate</button>
+<p id="result"></p>
 
-<div class="container">
-  <input type="text" id="userLink" placeholder="Paste your link here">
-  <select id="linkType">
-    <option value="profile">Profile</option>
-    <option value="group">Group</option>
-    <option value="private">Private Server</option>
-  </select>
-  <button id="generateBtn">Generate</button>
-  <div id="result">Your shortened link will appear here</div>
-</div>
+<script>
+const params = new URLSearchParams(window.location.search);
+const site = params.get('site');
+document.getElementById('site-name').innerText = site;
 
-<a class="discord-btn" href="https://discord.gg/JeXsAxY6e" target="_blank">Join Our Discord</a>
-<img class="banner" src="https://i.imgur.com/8RCzmp3.gif" alt="Banner">
+document.getElementById('generate').addEventListener('click', async ()=>{
+  const url = document.getElementById('url').value;
+  if(!url) return alert('Enter a link!');
+  try{
+    const response = await fetch(`/api/${site}.js?url=${encodeURIComponent(url)}`);
+    const shortUrl = await response.text();
+    document.getElementById('result').innerHTML = `[${shortUrl}]`;
+  }catch(err){
+    document.getElementById('result').innerText='Error generating link';
+  }
+});
+</script>
 
-<script src="shortener.js"></script>
 </body>
 </html>

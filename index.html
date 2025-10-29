@@ -1,118 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Corrupt - Roblox Link Hider</title>
 <style>
-  /* Fundal cu linii roșii ca la Novaflare */
-  body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    font-family: 'Arial', sans-serif;
-    background: url('https://i.pinimg.com/originals/39/7b/c2/397bc20ad2da1a5920c1347052aea03d.gif') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
-  }
+    /* Reset & Body */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body, html { width:100%; height:100%; font-family: 'Arial', sans-serif; background:#000; overflow:hidden; color:#fff; }
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    text-align: center;
-    backdrop-filter: brightness(0.7);
-  }
+    /* Canvas full screen */
+    #backgroundCanvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
 
-  h1 {
-    font-size: 4rem;
-    margin-bottom: 0.5rem;
-    color: #FF0000; /* roșu */
-    text-shadow: 0 0 10px #FF0000;
-  }
+    /* Container */
+    .container { position:relative; max-width:800px; margin:0 auto; padding:50px 20px; text-align:center; }
 
-  p.subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
+    /* Title */
+    .title { font-size: 60px; font-weight:bold; color:#ff0000; text-shadow:0 0 10px #ff0000, 0 0 20px #ff0000; margin-bottom:20px; }
 
-  input[type="text"] {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    width: 300px;
-    border-radius: 5px;
-    border: 2px solid #ccc;
-    margin-bottom: 1rem;
-  }
+    /* Subtitle */
+    .subtitle { font-size:20px; margin-bottom:30px; }
 
-  .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 2rem;
-  }
+    /* Input */
+    #urlInput { width:80%; padding:12px; border-radius:5px; border:none; margin-bottom:20px; font-size:16px; }
 
-  .buttons button {
-    padding: 0.7rem 1.2rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 2px solid #aaa;
-    background-color: black;
-    color: white;
-    transition: all 0.3s ease;
-  }
+    /* Buttons */
+    .btn { padding:12px 25px; margin:5px; font-size:16px; border:2px solid #888; border-radius:5px; background:#000; color:#fff; cursor:pointer; transition:0.3s; }
+    .btn:hover { border-color:#ff0000; }
 
-  .buttons button:hover {
-    border-color: red;
-    transform: scale(1.05);
-  }
+    /* Output */
+    #output { margin-top:20px; font-size:18px; color:#fff; word-break:break-all; }
 
-  #discord-btn {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border: 2px solid white;
-    color: white;
-    background-color: rgba(0,0,0,0.6);
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    margin-top: 2rem;
-  }
-
-  #discord-btn:hover {
-    border-color: red;
-    color: red;
-  }
+    /* Join Discord */
+    #discordBtn { display:block; margin:40px auto 0; padding:12px 25px; font-size:18px; color:#fff; background:#000; border:2px solid #ff0000; border-radius:5px; text-decoration:none; transition:0.3s; }
+    #discordBtn:hover { color:#ff0000; }
 
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>CORRUPTED</h1>
-    <p class="subtitle">Hide & Shorten Your Roblox Links Securely</p>
 
-    <input type="text" id="url-input" placeholder="Paste your Roblox link here">
+<canvas id="backgroundCanvas"></canvas>
 
-    <div class="buttons">
-      <button data-service="isgd">is.gd (Recommended)</button>
-      <button data-service="tinyurl">TinyURL</button>
-      <button data-service="bitly">Bitly</button>
-      <button data-service="rebrandly">Rebrand.ly</button>
-      <button data-service="cuttly">Cutt.ly</button>
-      <button data-service="clickly">Click.ly</button>
-      <button data-service="tinycc">tiny.cc</button>
-      <button data-service="shorterme">shorter.me</button>
+<div class="container">
+    <div class="title">CORRUPT</div>
+    <div class="subtitle">Hide & Shorten Your Roblox Links Securely</div>
+
+    <input type="text" id="urlInput" placeholder="Paste your Roblox link here">
+
+    <div id="buttons">
+        <button class="btn" onclick="shortenLink('isgd')">is.gd</button>
+        <button class="btn" onclick="shortenLink('tinyurl')">TinyURL</button>
+        <button class="btn" onclick="shortenLink('bitly')">Bit.ly</button>
+        <button class="btn" onclick="shortenLink('rebrandly')">Rebrand.ly</button>
+        <button class="btn" onclick="shortenLink('cuttly')">Cutt.ly</button>
+        <button class="btn" onclick="shortenLink('clickly')">Click.ly</button>
+        <button class="btn" onclick="shortenLink('tinycc')">Tiny.cc</button>
+        <button class="btn" onclick="shortenLink('shorterme')">Shorter.me</button>
     </div>
 
-    <a href="https://discord.gg/6rseCfGMa" id="discord-btn" target="_blank">JOIN OUR DISCORD</a>
-    
-    <p id="result" style="margin-top:2rem; font-size:1rem; word-break:break-all;"></p>
-  </div>
+    <div id="output"></div>
 
-<script src="shortener.js"></script>
+    <a href="https://discord.gg/6rseCfGMa" target="_blank" id="discordBtn">JOIN OUR DISCORD</a>
+</div>
+
+<script>
+    const canvas = document.getElementById('backgroundCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const points = [];
+    const lines = [];
+    const POINT_COUNT = 50;
+
+    for(let i=0;i<POINT_COUNT;i++){
+        points.push({
+            x:Math.random()*canvas.width,
+            y:Math.random()*canvas.height,
+            vx:(Math.random()-0.5)*0.5,
+            vy:(Math.random()-0.5)*0.5
+        });
+    }
+
+    function draw(){
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        for(let i=0;i<POINT_COUNT;i++){
+            const p = points[i];
+            p.x += p.vx; p.y += p.vy;
+            if(p.x<0 || p.x>canvas.width) p.vx*=-1;
+            if(p.y<0 || p.y>canvas.height) p.vy*=-1;
+            ctx.fillStyle='#ff0000';
+            ctx.beginPath();
+            ctx.arc(p.x,p.y,2,0,Math.PI*2);
+            ctx.fill();
+        }
+
+        for(let i=0;i<POINT_COUNT;i++){
+            for(let j=i+1;j<POINT_COUNT;j++){
+                const p1 = points[i];
+                const p2 = points[j];
+                const dist = Math.hypot(p1.x-p2.x, p1.y-p2.y);
+                if(dist<150){
+                    ctx.strokeStyle='rgba(255,0,0,'+(1-dist/150)+')';
+                    ctx.lineWidth=1;
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x,p1.y);
+                    ctx.lineTo(p2.x,p2.y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        requestAnimationFrame(draw);
+    }
+    draw();
+
+    async function shortenLink(service){
+        const url = document.getElementById('urlInput').value.trim();
+        if(!url) return alert('Paste your Roblox link!');
+
+        try{
+            const res = await fetch(`api/${service}.js?url=${encodeURIComponent(url)}`);
+            const shortUrl = await res.text();
+            document.getElementById('output').textContent = `[${shortUrl}]`;
+        }catch(err){
+            alert('Error generating link');
+        }
+    }
+
+</script>
+
 </body>
 </html>

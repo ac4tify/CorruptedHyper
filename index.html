@@ -3,67 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CorruptedV1 • Link Shortener Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<title>CORRUPT | Link Hider</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Anton', sans-serif; }
-body {
-  min-height: 100vh;
-  background: url('https://i.pinimg.com/originals/01/cf/fb/01cffb14ea56c91a4cee3b945f00701e.gif') no-repeat center center/cover fixed;
-  display:flex; flex-direction:column; align-items:center; color:white; text-align:center;
-}
-h1 { font-size:4rem; margin-top:40px; color:white; animation: glow 1.5s ease-in-out infinite alternate; }
-@keyframes glow { 0% {text-shadow: 0 0 5px #fff;} 100% {text-shadow: 0 0 20px #fff;} }
-.description { margin-bottom:40px; font-size:1rem; color:white; }
-.shortener-buttons { display:flex; flex-direction:column; gap:15px; margin-bottom:40px; align-items:center; }
-.shortener-btn {
-  padding:15px 30px; 
-  border:2px solid #fff; 
-  border-radius:10px;
-  background: rgba(255,0,0,0.2); /* faded red */
-  color:white; /* text alb */
-  font-weight:bold;
-  cursor:pointer; 
-  font-size:1.3rem; 
-  width:250px;
-  transition:0.3s;
-}
-.shortener-btn:hover { background: rgba(255,0,0,0.5); } /* hover mai intens */
-.recommended { color: red; font-size:0.8rem; display:block; margin-top:5px; } /* doar Is.gd */
-.discord-btn {
-  margin-top:20px; 
-  padding:12px 25px; 
-  border:2px solid #fff; 
-  border-radius:10px;
-  background:rgba(255,255,255,0.2); 
-  color:white; 
-  font-size:1.2rem; 
-  text-decoration:none;
-}
-.banner { margin-top:20px; }
+  body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: url('https://i.pinimg.com/originals/39/7b/c2/397bc20ad2da1a5920c1347052aea03d.gif') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  header {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff4d4d;
+  }
+  main {
+    flex: 1;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .box {
+    background: rgba(51,0,0,0.8);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  input[type="text"], select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ff4d4d;
+    border-radius: 5px;
+    background: #330000;
+    color: #fff;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #ff0000;
+    border: 2px solid #ff4d4d;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s all;
+  }
+  button:hover {
+    background: #cc0000;
+    border-color: #ff0000;
+  }
+  #result {
+    margin-top: 15px;
+    background: rgba(51,0,0,0.6);
+    padding: 12px;
+    border-radius: 5px;
+    word-break: break-all;
+  }
+  a button {
+    margin-top: 15px;
+  }
 </style>
 </head>
 <body>
 
-<h1>CorruptedV1</h1>
-<div class="description">Click a shortener to open its menu</div>
+<header>CORRUPT</header>
 
-<div class="shortener-buttons">
-  <button class="shortener-btn" onclick="openShortener('isgd')">Is.gd<span class="recommended">Recommended</span></button>
-  <button class="shortener-btn" onclick="openShortener('tinyurl')">TinyURL</button>
-  <button class="shortener-btn" onclick="openShortener('shrtco')">shrtco.de</button>
-  <button class="shortener-btn" onclick="openShortener('clckru')">Click.ru</button>
-  <button class="shortener-btn" onclick="openShortener('vgd')">v.gd</button>
-  <button class="shortener-btn" onclick="openShortener('dagd')">Da.gd</button>
-</div>
+<main>
+  <div class="box">
+    <h2>Hide Your Link</h2>
+    <input type="text" id="url" placeholder="Paste your Roblox link here">
+    <select id="type">
+      <option value="profile">Profile</option>
+      <option value="group">Group</option>
+      <option value="private">Private Server</option>
+      <option value="any">Any Link</option>
+    </select>
+    <button onclick="generateLink()">Generate</button>
 
-<a class="discord-btn" href="https://discord.gg/JeXsAxY6e" target="_blank">Join Our Discord</a>
-<img class="banner" src="https://i.imgur.com/8RCzmp3.gif" alt="Banner">
+    <div id="result"></div>
+
+    <!-- Join Discord Button -->
+    <a href="https://discord.gg/6rseCfGMa" target="_blank">
+      <button>Join Our Discord</button>
+    </a>
+  </div>
+</main>
 
 <script>
-function openShortener(service){
-  window.location.href = `shortener.html?service=${service}`;
+async function generateLink() {
+  const url = document.getElementById('url').value.trim();
+  const type = document.getElementById('type').value;
+  const resultEl = document.getElementById('result');
+  if(!url) return alert('Please enter a link');
+
+  // Exemplu simulare link ascuns
+  let hidden;
+  switch(type){
+    case 'profile':
+      hidden = `[https_:_//www.roblox.com/users/3095250/profile]`; break;
+    case 'group':
+      hidden = `[https_:_//www.roblox.com/groups/2194003353]`; break;
+    case 'private':
+      hidden = `[https_:_//www.roblox.com/share?code=80177c63cdc8614aa84be3cbd84b051a&type=Server]`; break;
+    default:
+      hidden = `[${url}]`; break;
+  }
+  resultEl.textContent = hidden;
 }
 </script>
+
 </body>
 </html>

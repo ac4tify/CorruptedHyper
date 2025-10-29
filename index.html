@@ -1,135 +1,147 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corrupt - Roblox Link Hider</title>
+<title>Corrupted - Link Shortener</title>
 <style>
-    /* Reset & Body */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body, html { width:100%; height:100%; font-family: 'Arial', sans-serif; background:#000; overflow:hidden; color:#fff; }
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  color:#fff;
+  overflow-x:hidden;
+}
 
-    /* Canvas full screen */
-    #backgroundCanvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
+#laser-bg {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
 
-    /* Container */
-    .container { position:relative; max-width:800px; margin:0 auto; padding:50px 20px; text-align:center; }
+/* Animatie de fade la incarcare */
+.fade-in {
+  opacity:0;
+  animation: fadeIn 2s forwards;
+}
+@keyframes fadeIn {
+  to {opacity:1;}
+}
 
-    /* Title */
-    .title { font-size: 60px; font-weight:bold; color:#ff0000; text-shadow:0 0 10px #ff0000, 0 0 20px #ff0000; margin-bottom:20px; }
+/* Butoane */
+.shorteners {
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:120px;
+}
+.shorteners button{
+  padding:15px 25px;
+  border-radius:25px;
+  border:2px solid #ccc;
+  background:#000;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  transition: all 0.3s ease;
+}
+.shorteners button:hover{
+  border-color:red;
+  transform:scale(1.05);
+}
 
-    /* Subtitle */
-    .subtitle { font-size:20px; margin-bottom:30px; }
+/* Titlu */
+h1{
+  text-align:center;
+  font-size:48px;
+  margin-top:50px;
+  text-shadow: 0 0 10px red;
+}
 
-    /* Input */
-    #urlInput { width:80%; padding:12px; border-radius:5px; border:none; margin-bottom:20px; font-size:16px; }
-
-    /* Buttons */
-    .btn { padding:12px 25px; margin:5px; font-size:16px; border:2px solid #888; border-radius:5px; background:#000; color:#fff; cursor:pointer; transition:0.3s; }
-    .btn:hover { border-color:#ff0000; }
-
-    /* Output */
-    #output { margin-top:20px; font-size:18px; color:#fff; word-break:break-all; }
-
-    /* Join Discord */
-    #discordBtn { display:block; margin:40px auto 0; padding:12px 25px; font-size:18px; color:#fff; background:#000; border:2px solid #ff0000; border-radius:5px; text-decoration:none; transition:0.3s; }
-    #discordBtn:hover { color:#ff0000; }
-
+/* Join Discord */
+#join-discord{
+  display:block;
+  margin:50px auto;
+  padding:15px 30px;
+  font-size:18px;
+  border:2px solid #fff;
+  border-radius:25px;
+  background:transparent;
+  color:#fff;
+  text-decoration:none;
+  text-align:center;
+  width:250px;
+  transition: all 0.3s ease;
+}
+#join-discord:hover{
+  border-color:red;
+  color:red;
+}
 </style>
 </head>
-<body>
+<body class="fade-in">
 
-<canvas id="backgroundCanvas"></canvas>
+<canvas id="laser-bg"></canvas>
 
-<div class="container">
-    <div class="title">CORRUPT</div>
-    <div class="subtitle">Hide & Shorten Your Roblox Links Securely</div>
-
-    <input type="text" id="urlInput" placeholder="Paste your Roblox link here">
-
-    <div id="buttons">
-        <button class="btn" onclick="shortenLink('isgd')">is.gd</button>
-        <button class="btn" onclick="shortenLink('tinyurl')">TinyURL</button>
-        <button class="btn" onclick="shortenLink('bitly')">Bit.ly</button>
-        <button class="btn" onclick="shortenLink('rebrandly')">Rebrand.ly</button>
-        <button class="btn" onclick="shortenLink('cuttly')">Cutt.ly</button>
-        <button class="btn" onclick="shortenLink('clickly')">Click.ly</button>
-        <button class="btn" onclick="shortenLink('tinycc')">Tiny.cc</button>
-        <button class="btn" onclick="shortenLink('shorterme')">Shorter.me</button>
-    </div>
-
-    <div id="output"></div>
-
-    <a href="https://discord.gg/6rseCfGMa" target="_blank" id="discordBtn">JOIN OUR DISCORD</a>
+<h1>CORRUPTED</h1>
+<div class="shorteners">
+  <button onclick="window.location='shortener.html?site=isgd'">is.gd (Recommended)</button>
+  <button onclick="window.location='shortener.html?site=tinyurl'">TinyURL</button>
+  <button onclick="window.location='shortener.html?site=bitly'">Bitly</button>
+  <button onclick="window.location='shortener.html?site=rebrandly'">Rebrand.ly</button>
+  <button onclick="window.location='shortener.html?site=cuttly'">Cutt.ly</button>
+  <button onclick="window.location='shortener.html?site=clickly'">Click.ly</button>
+  <button onclick="window.location='shortener.html?site=tinycc'">Tiny.cc</button>
+  <button onclick="window.location='shortener.html?site=shorterme'">Shorter.me</button>
 </div>
 
+<a id="join-discord" href="https://discord.gg/6rseCfGMa" target="_blank">JOIN OUR DISCORD</a>
+
 <script>
-    const canvas = document.getElementById('backgroundCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// Fundal laser rosu
+const canvas = document.getElementById('laser-bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    const points = [];
-    const lines = [];
-    const POINT_COUNT = 50;
+let points = [];
+for (let i = 0; i < 100; i++) {
+    points.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, dx: (Math.random()-0.5)*0.5, dy: (Math.random()-0.5)*0.5});
+}
 
-    for(let i=0;i<POINT_COUNT;i++){
-        points.push({
-            x:Math.random()*canvas.width,
-            y:Math.random()*canvas.height,
-            vx:(Math.random()-0.5)*0.5,
-            vy:(Math.random()-0.5)*0.5
-        });
-    }
-
-    function draw(){
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-
-        for(let i=0;i<POINT_COUNT;i++){
-            const p = points[i];
-            p.x += p.vx; p.y += p.vy;
-            if(p.x<0 || p.x>canvas.width) p.vx*=-1;
-            if(p.y<0 || p.y>canvas.height) p.vy*=-1;
-            ctx.fillStyle='#ff0000';
-            ctx.beginPath();
-            ctx.arc(p.x,p.y,2,0,Math.PI*2);
-            ctx.fill();
-        }
-
-        for(let i=0;i<POINT_COUNT;i++){
-            for(let j=i+1;j<POINT_COUNT;j++){
-                const p1 = points[i];
-                const p2 = points[j];
-                const dist = Math.hypot(p1.x-p2.x, p1.y-p2.y);
-                if(dist<150){
-                    ctx.strokeStyle='rgba(255,0,0,'+(1-dist/150)+')';
-                    ctx.lineWidth=1;
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x,p1.y);
-                    ctx.lineTo(p2.x,p2.y);
-                    ctx.stroke();
-                }
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = 'rgba(255,0,0,0.3)';
+    points.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+        ctx.fill();
+    });
+    ctx.strokeStyle = 'rgba(255,0,0,0.1)';
+    for (let i=0;i<points.length;i++){
+        for(let j=i+1;j<points.length;j++){
+            let dx = points[i].x - points[j].x;
+            let dy = points[i].y - points[j].y;
+            let dist = Math.sqrt(dx*dx + dy*dy);
+            if(dist<100){
+                ctx.beginPath();
+                ctx.moveTo(points[i].x, points[i].y);
+                ctx.lineTo(points[j].x, points[j].y);
+                ctx.stroke();
             }
         }
-
-        requestAnimationFrame(draw);
     }
-    draw();
-
-    async function shortenLink(service){
-        const url = document.getElementById('urlInput').value.trim();
-        if(!url) return alert('Paste your Roblox link!');
-
-        try{
-            const res = await fetch(`api/${service}.js?url=${encodeURIComponent(url)}`);
-            const shortUrl = await res.text();
-            document.getElementById('output').textContent = `[${shortUrl}]`;
-        }catch(err){
-            alert('Error generating link');
-        }
-    }
-
+    points.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+        if(p.x<0||p.x>canvas.width)p.dx*=-1;
+        if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    });
+    requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>

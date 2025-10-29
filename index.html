@@ -1,175 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CORRUPT</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CORRUPT — Hide Your Roblox Links</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
     body {
-      background: radial-gradient(circle at top, #ff0000 0%, #000 90%);
+      margin: 0;
       height: 100vh;
       overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #000 0%, #120000 100%);
       color: white;
-      text-align: center;
     }
 
-    .waves {
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      top: 0;
-      left: -50%;
-      background: url('https://i.ibb.co/NsW1t4p/red-waves.gif') repeat-x;
-      background-size: cover;
-      opacity: 0.3;
-      animation: moveWaves 15s linear infinite;
+    h1 {
+      font-size: 3em;
+      color: #ff1a1a;
+      text-shadow: 0 0 20px #ff1a1a;
+      margin-bottom: 10px;
     }
 
-    @keyframes moveWaves {
-      from {transform: translateX(0);}
-      to {transform: translateX(-25%);}
-    }
-
-    .container {
-      position: relative;
-      z-index: 10;
-      top: 20%;
-    }
-
-    .glitch {
-      font-size: 5em;
-      font-weight: bold;
-      position: relative;
-      color: white;
-      text-transform: uppercase;
-      animation: flicker 2s infinite;
-    }
-
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      width: 100%;
-      color: red;
-      clip: rect(0, 0, 0, 0);
-      animation: glitch 2s infinite;
-    }
-
-    .glitch::before {
-      left: 2px;
-      text-shadow: -2px 0 #ff0000;
-      animation-delay: 0.2s;
-    }
-
-    .glitch::after {
-      left: -2px;
-      text-shadow: -2px 0 #ff4d4d;
-      animation-delay: 0.4s;
-    }
-
-    .subtitle {
-      margin-top: 10px;
+    p {
+      color: #ff8080;
+      margin-bottom: 30px;
       font-size: 1.2em;
-      color: #ffb3b3;
-      text-shadow: 0 0 10px #ff0000;
     }
 
     .buttons {
-      margin-top: 40px;
       display: flex;
+      gap: 20px;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
     }
 
-    button {
-      background: rgba(255, 0, 0, 0.15);
-      border: 1px solid red;
-      color: white;
-      padding: 10px 20px;
+    .btn {
+      background: transparent;
+      border: 2px solid #ff1a1a;
+      color: #ff1a1a;
+      padding: 10px 25px;
       font-size: 1.1em;
-      cursor: pointer;
-      border-radius: 8px;
-      backdrop-filter: blur(6px);
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: rgba(255, 0, 0, 0.4);
-      transform: scale(1.08);
-    }
-
-    .discord-btn {
-      display: inline-block;
-      margin-top: 60px;
-      padding: 15px 30px;
-      color: white;
-      background: linear-gradient(90deg, #ff0000, #ff4d4d);
-      border: 2px solid #ff0000;
+      border-radius: 10px;
       text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      box-shadow: 0 0 25px #ff0000;
+      text-shadow: 0 0 10px #ff1a1a;
       transition: 0.3s;
     }
 
-    .discord-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 50px #ff4d4d;
+    .btn:hover {
+      background: #ff1a1a;
+      color: #000;
+      box-shadow: 0 0 20px #ff1a1a;
     }
 
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 53%, 57%, 100% {opacity: 1;}
-      20%, 24%, 55% {opacity: 0.3;}
+    .wave {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.1), transparent 70%);
+      animation: waveMove 8s linear infinite;
+      top: -50%;
+      left: -50%;
     }
 
-    @keyframes glitch {
-      0% {clip: rect(42px, 9999px, 44px, 0);}
-      10% {clip: rect(12px, 9999px, 85px, 0);}
-      20% {clip: rect(85px, 9999px, 140px, 0);}
-      30% {clip: rect(0px, 9999px, 80px, 0);}
-      40% {clip: rect(50px, 9999px, 100px, 0);}
-      50% {clip: rect(30px, 9999px, 50px, 0);}
-      60% {clip: rect(20px, 9999px, 70px, 0);}
-      70% {clip: rect(80px, 9999px, 90px, 0);}
-      80% {clip: rect(10px, 9999px, 130px, 0);}
-      90% {clip: rect(50px, 9999px, 100px, 0);}
-      100% {clip: rect(0, 9999px, 9999px, 0);}
+    @keyframes waveMove {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <div class="waves"></div>
-
-  <div class="container">
-    <h1 class="glitch" data-text="CORRUPT">CORRUPT</h1>
-    <p class="subtitle">Hide & Shorten Your Roblox Links Securely</p>
-
-    <div class="buttons">
-      <button onclick="openLink('https://is.gd')">is.gd</button>
-      <button onclick="openLink('https://tinyurl.com')">TinyURL</button>
-      <button onclick="openLink('https://bitly.com')">Bitly</button>
-      <button onclick="openLink('https://shorturl.at')">ShortURL</button>
-    </div>
-
-    <a href="https://discord.gg/6rseCfGMa" class="discord-btn" target="_blank">
-      JOIN OUR DISCORD
-    </a>
+  <div class="wave"></div>
+  <h1>CORRUPT</h1>
+  <p>Hide & Shorten Your Roblox Links Securely</p>
+  <div class="buttons">
+    <a href="#" class="btn">is.gd</a>
+    <a href="#" class="btn">TinyURL</a>
+    <a href="#" class="btn">Bitly</a>
+    <a href="#" class="btn">ShortURL</a>
   </div>
-
-  <script>
-    function openLink(url) {
-      window.open(url, '_blank');
-    }
-  </script>
+  <br>
+  <a href="https://discord.gg/6rseCfGMa" class="btn">JOIN OUR DISCORD</a>
 </body>
 </html>

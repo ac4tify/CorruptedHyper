@@ -3,130 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CORRUPT</title>
-<!-- Particles.js -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<title>Corrupt</title>
 <style>
-  html, body {
-    margin: 0; padding: 0;
-    width: 100%; height: 100%;
-    font-family: 'Arial', sans-serif;
-    color: white;
-    background: #000;
-    overflow-x: hidden;
-  }
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        font-family: 'Arial', sans-serif;
+        overflow: hidden;
+        background: #000;
+        color: white;
+    }
 
-  #particles-js {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0; left: 0;
-    z-index: -1;
-  }
+    #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
 
-  .container {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding-top: 80px;
-  }
+    .container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
 
-  .title {
-    font-size: 64px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 0 0 20px red, 0 0 30px red;
-    margin-bottom: 20px;
-  }
+    h1 {
+        font-size: 4em;
+        color: #ff0000;
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        margin: 0.2em;
+    }
 
-  .subtitle {
-    font-size: 20px;
-    margin-bottom: 40px;
-    color: white;
-  }
+    p {
+        font-size: 1.5em;
+        margin: 0.5em 0 2em 0;
+    }
 
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 50px;
-  }
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
 
-  .btn {
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    border: 2px solid white;
-    border-radius: 8px;
-    background: rgba(0,0,0,0.5);
-    color: white;
-    text-decoration: none;
-    transition: 0.3s;
-  }
+    .btn {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 1.2em;
+        color: #fff;
+        text-decoration: none;
+        border: 2px solid #fff;
+        border-radius: 8px;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
+    }
 
-  .btn:hover {
-    background: rgba(255,0,0,0.7);
-    border-color: red;
-    color: white;
-  }
+    .btn:hover {
+        color: #ff0000;
+        border-color: #ff0000;
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+    }
 
-  #discord-btn {
-    padding: 15px 50px;
-    font-size: 20px;
-    font-weight: bold;
-    border: 2px solid white;
-    background: rgba(0,0,0,0.3);
-    text-decoration: none;
-    color: white;
-    text-shadow: 0 0 10px red;
-  }
+    .discord-btn {
+        margin-top: 2em;
+        color: #fff;
+        border-color: #ff0000;
+    }
 
-  #discord-btn:hover {
-    background: rgba(255,0,0,0.6);
-    border-color: red;
-    color: white;
-  }
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 3em;
+        }
+        p {
+            font-size: 1.2em;
+        }
+    }
 </style>
 </head>
 <body>
 
+<!-- Particles Background -->
 <div id="particles-js"></div>
 
 <div class="container">
-  <div class="title">CORRUPT</div>
-  <div class="subtitle">Hide & Shorten Your Roblox Links Securely</div>
+    <h1>CORRUPTED</h1>
+    <p>Hide & Shorten Your Roblox Links Securely</p>
 
-  <div class="buttons">
-    <a class="btn" href="#">is.gd</a>
-    <a class="btn" href="#">TinyURL</a>
-    <a class="btn" href="#">Bitly</a>
-    <a class="btn" href="#">ShortURL</a>
-  </div>
+    <div class="buttons">
+        <a href="#" class="btn">is.gd - Recommended</a>
+        <a href="#" class="btn">TinyURL</a>
+        <a href="#" class="btn">Bitly</a>
+        <a href="#" class="btn">ShortURL</a>
+    </div>
 
-  <a id="discord-btn" href="https://discord.gg/6rseCfGMa" target="_blank">JOIN OUR DISCORD</a>
+    <a href="https://discord.gg/6rseCfGMa" class="btn discord-btn">JOIN OUR DISCORD</a>
 </div>
 
+<!-- Particles.js -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
 particlesJS("particles-js", {
   "particles": {
-    "number": {"value": 80},
-    "color": {"value": "#ff0000"},
-    "shape": {"type": "circle"},
-    "opacity": {"value": 0.7},
-    "size": {"value": 3},
+    "number": { "value": 80 },
+    "color": { "value": "#ff0000" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.5, "random": true },
+    "size": { "value": 3, "random": true },
     "line_linked": {
       "enable": true,
       "distance": 150,
       "color": "#ff0000",
-      "opacity": 0.5,
+      "opacity": 0.4,
       "width": 1
     },
-    "move": {"enable": true, "speed": 2}
+    "move": { "enable": true, "speed": 2 }
   },
   "interactivity": {
-    "events": {"onhover": {"enable": true, "mode": "repulse"}}
-  }
+    "detect_on": "canvas",
+    "events": {
+      "onhover": { "enable": true, "mode": "repulse" },
+      "onclick": { "enable": true, "mode": "push" }
+    },
+    "modes": {
+      "repulse": { "distance": 100 },
+      "push": { "particles_nb": 4 }
+    }
+  },
+  "retina_detect": true
 });
 </script>
 

@@ -3,163 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CORRUPTED</title>
-
-<!-- Font și stiluri -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-
+<title>Corrupt - Roblox Link Hider</title>
 <style>
-  /* Reset */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  /* Particles background */
-  #particles-js {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    background: #000; /* fundal întunecat */
-  }
-
+  /* Fundal cu linii roșii ca la Novaflare */
   body {
-    font-family: 'Orbitron', sans-serif;
-    color: #fff;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
+    font-family: 'Arial', sans-serif;
+    background: url('https://i.pinimg.com/originals/39/7b/c2/397bc20ad2da1a5920c1347052aea03d.gif') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
   }
 
   .container {
-    position: relative;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     min-height: 100vh;
-    padding: 50px 20px;
     text-align: center;
+    backdrop-filter: brightness(0.7);
   }
 
   h1 {
     font-size: 4rem;
-    color: #ff0000;
-    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
+    color: #FF0000; /* roșu */
+    text-shadow: 0 0 10px #FF0000;
   }
 
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: 40px;
-    color: #fff;
-    text-shadow: 0 0 5px #ff0000;
+  p.subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  input[type="text"] {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    width: 300px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    margin-bottom: 1rem;
   }
 
   .buttons {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    max-width: 400px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 2rem;
   }
 
-  .btn {
-    display: block;
-    padding: 15px;
+  .buttons button {
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid #aaa;
+    background-color: black;
+    color: white;
+    transition: all 0.3s ease;
+  }
+
+  .buttons button:hover {
+    border-color: red;
+    transform: scale(1.05);
+  }
+
+  #discord-btn {
+    padding: 1rem 2rem;
     font-size: 1.2rem;
-    color: #fff;
+    border: 2px solid white;
+    color: white;
+    background-color: rgba(0,0,0,0.6);
     text-decoration: none;
-    background: rgba(255,0,0,0.6);
-    border: 2px solid #ff0000;
-    border-radius: 10px;
-    text-align: center;
+    border-radius: 8px;
     transition: all 0.3s ease;
+    margin-top: 2rem;
   }
 
-  .btn:hover {
-    background: rgba(255,0,0,0.9);
-    text-shadow: 0 0 10px #fff;
+  #discord-btn:hover {
+    border-color: red;
+    color: red;
   }
 
-  /* Join Discord jos */
-  .discord-btn {
-    margin-top: 50px;
-    padding: 15px 25px;
-    font-size: 1.3rem;
-    color: #fff;
-    background: rgba(255,0,0,0.7);
-    border: 2px solid #ff0000;
-    border-radius: 10px;
-    text-decoration: none;
-    text-shadow: 0 0 5px #fff;
-    transition: all 0.3s ease;
-  }
-
-  .discord-btn:hover {
-    background: rgba(255,0,0,1);
-    text-shadow: 0 0 15px #fff;
-  }
-
-  /* Responsive */
-  @media(max-width:600px){
-    h1 { font-size: 3rem; }
-    h2 { font-size: 1.2rem; }
-    .btn { font-size: 1rem; padding: 12px; }
-  }
 </style>
 </head>
 <body>
+  <div class="container">
+    <h1>CORRUPTED</h1>
+    <p class="subtitle">Hide & Shorten Your Roblox Links Securely</p>
 
-<!-- Particles -->
-<div id="particles-js"></div>
+    <input type="text" id="url-input" placeholder="Paste your Roblox link here">
 
-<div class="container">
-  <h1>CORRUPTED</h1>
-  <h2>Hide & Shorten Your Roblox Links Securely</h2>
+    <div class="buttons">
+      <button data-service="isgd">is.gd (Recommended)</button>
+      <button data-service="tinyurl">TinyURL</button>
+      <button data-service="bitly">Bitly</button>
+      <button data-service="rebrandly">Rebrand.ly</button>
+      <button data-service="cuttly">Cutt.ly</button>
+      <button data-service="clickly">Click.ly</button>
+      <button data-service="tinycc">tiny.cc</button>
+      <button data-service="shorterme">shorter.me</button>
+    </div>
 
-  <div class="buttons">
-    <a href="#" class="btn">is.gd</a>
-    <a href="#" class="btn">TinyURL</a>
-    <a href="#" class="btn">Bitly</a>
-    <a href="#" class="btn">ShortURL</a>
+    <a href="https://discord.gg/6rseCfGMa" id="discord-btn" target="_blank">JOIN OUR DISCORD</a>
+    
+    <p id="result" style="margin-top:2rem; font-size:1rem; word-break:break-all;"></p>
   </div>
 
-  <a href="https://discord.gg/6rseCfGMa" target="_blank" class="discord-btn">JOIN OUR DISCORD</a>
-</div>
-
-<!-- Particles.js -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<script>
-particlesJS("particles-js", {
-  "particles": {
-    "number": { "value": 80 },
-    "color": { "value": "#ff0000" },
-    "shape": { "type": "circle" },
-    "opacity": { "value": 0.7, "random": true },
-    "size": { "value": 3, "random": true },
-    "line_linked": {
-      "enable": true,
-      "distance": 150,
-      "color": "#ff0000",
-      "opacity": 0.7,
-      "width": 1.5
-    },
-    "move": { "enable": true, "speed": 3 }
-  },
-  "interactivity": {
-    "detect_on": "canvas",
-    "events": {
-      "onhover": { "enable": true, "mode": "repulse" },
-      "onclick": { "enable": true, "mode": "push" }
-    },
-    "modes": {
-      "repulse": { "distance": 120 },
-      "push": { "particles_nb": 4 }
-    }
-  },
-  "retina_detect": true
-});
-</script>
-
+<script src="shortener.js"></script>
 </body>
 </html>

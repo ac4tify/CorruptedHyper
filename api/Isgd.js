@@ -1,6 +1,4 @@
-const fetch = require('node-fetch');
-
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   try {
     const url = req.query.url;
     if (!url) return res.status(400).send('Missing URL');
@@ -10,8 +8,9 @@ module.exports = async (req, res) => {
     const shortUrl = (await response.text()).trim();
 
     res.setHeader('Content-Type', 'text/plain');
-    res.send(shortUrl);
+    res.status(200).send(shortUrl);
   } catch (err) {
+    console.error(err);
     res.status(500).send('Error processing the request');
   }
-};
+}

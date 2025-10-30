@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     if (!url) return res.status(400).send('Missing URL');
 
     const apiUrl = `https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`;
-    const response = await fetch(apiUrl);
+    const response = await fetch(`/api/${service}?url=${encodeURIComponent(url)}`);
     const shortUrl = (await response.text()).trim();
 
     res.setHeader('Content-Type', 'text/plain');

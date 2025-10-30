@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CORRUPT | Shorten Roblox Link</title>
+  <title>Shorten Roblox Link</title>
   <style>
     body {
       margin: 0;
@@ -22,37 +22,28 @@
       color: #ff0000;
       text-shadow: 0 0 10px #ff0000;
       margin-bottom: 20px;
-      text-align: center;
     }
 
     input, select {
       padding: 10px;
       font-size: 1em;
       margin: 5px;
-      width: 300px;
+      width: 320px;
       border: 2px solid #444;
       border-radius: 10px;
       background: #111;
       color: white;
-      outline: none;
-      transition: 0.3s;
-    }
-
-    input:focus, select:focus {
-      border-color: #ff0000;
-      box-shadow: 0 0 10px #ff0000;
     }
 
     button {
       background: black;
       border: 2px solid #ff0000;
       color: white;
-      padding: 10px 25px;
-      border-radius: 12px;
+      padding: 12px 25px;
+      border-radius: 15px;
       cursor: pointer;
       margin-top: 15px;
       transition: 0.3s;
-      font-size: 1em;
     }
 
     button:hover {
@@ -68,75 +59,72 @@
       text-align: center;
     }
 
-    a.back {
-      color: #ff0000;
-      text-decoration: none;
-      margin-top: 30px;
-      transition: 0.3s;
-    }
-
-    a.back:hover {
-      text-shadow: 0 0 10px #ff0000;
+    .disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   </style>
 </head>
 <body>
 
-  <h1>Generate Hidden Roblox Link</h1>
+<h1>Generate Hidden Roblox Link</h1>
 
-  <select id="type">
-    <option value="profile">Profile</option>
-    <option value="group">Group</option>
-    <option value="private">Private Server</option>
-    <option value="any">Any Link</option>
-  </select><br>
+<select id="type">
+  <option value="profile">Profile</option>
+  <option value="group">Group</option>
+  <option value="private">Private Server</option>
+  <option value="any">Any Link</option>
+</select><br>
 
-  <input type="text" id="url" placeholder="Paste your Roblox link here"><br>
-  <button onclick="generate()">Generate</button>
+<input type="text" id="url" placeholder="Paste your Roblox link here"><br>
+<button id="generateBtn" onclick="generate()">Generate</button>
 
-  <div id="result"></div>
+<div id="result"></div>
 
-  <a class="back" href="index.html">← Back to Home</a>
+<script>
+async function generate() {
+  const url = document.getElementById("url").value.trim();
+  const type = document.getElementById("type").value;
+  const params = new URLSearchParams(window.location.search);
+  const service = params.get("service");
 
-  <script>
-    async function generate() {
-      const url = document.getElementById("url").value.trim();
-      const type = document.getElementById("type").value;
-      const params = new URLSearchParams(window.location.search);
-      const service = params.get("service");
+  if (!url) {
+    alert("Please paste a Roblox link first!");
+    return;
+  }
 
-      if (!url) {
-        alert("⚠️ Please paste a Roblox link first!");
-        return;
-      }
+  if (!service) {
+    alert("No service selected. Go back and pick a service!");
+    return;
+  }
 
-      try {
-        // ✅ corect pentru Vercel — fără .js la final!
-        const response = await fetch(`/api/${service}?url=${encodeURIComponent(url)}`);
+  try {
+    const response = await fetch(`/api/${service}.js?url=${encodeURIComponent(url)}`);
+    if (!response.ok) throw new Error("API error");
+    const shortUrl = (await response.text()).trim();
 
-        if (!response.ok) {
-          throw new Error(`Server responded with ${response.status}`);
-        }
-
-        const shortUrl = (await response.text()).trim();
-
-        let finalText = "";
-        if (type === "profile") {
-          finalText = `[Roblox Profile](${shortUrl})`;
-        } else if (type === "group") {
-          finalText = `[Roblox Group](${shortUrl})`;
-        } else if (type === "private") {
-          finalText = `[Private Server Invite](${shortUrl})`;
-        } else {
-          finalText = `[Your Link](${shortUrl})`;
-        }
-
-        document.getElementById("result").innerText = finalText;
-      } catch (err) {
-        console.error(err);
-        document.getElementById("result").innerText = "❌ Error generating link: " + err.message;
-      }
+    let finalText = "";
+    if (type === "profile") {
+      finalText = `[https://www.roblox.com/users/3095250/profile](${shortUrl})`;
+    } else if (type === "group") {
+      finalText = `[https://www.roblox.com/groups/2194003353](${shortUrl})`;
+    } else if (type === "private") {
+      finalText = `[https://www.roblox.com/share?code=80177c63cdc8614aa84be3cbd84b051a&type=Server](${shortUrl})`;
+    } else {
+      finalText = `[${url}](${shortUrl})`;
     }
-  </script>
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerText = finalText;
+    navigator.clipboard.writeText(finalText).then(() => {
+      resultDiv.innerText += "\n\n✅ Copied to clipboard!";
+    });
+
+  } catch (err) {
+    document.getElementById("result").innerText = "Error generating link. Make sure the service supports it or API key is set.";
+  }
+}
+</script>
+
 </body>
 </html>

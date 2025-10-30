@@ -1,39 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Corrupted - Generate Link</title>
-<style>
-body{font-family:Arial, sans-serif;background:#000;color:#fff;text-align:center;padding-top:100px;}
-input{padding:10px;width:60%;margin-bottom:10px;border-radius:10px;border:2px solid #ccc;font-size:16px;}
-button{padding:10px 20px;border-radius:15px;background:#000;border:2px solid #ccc;color:#fff;font-size:16px;cursor:pointer;transition:0.3s;}
-button:hover{border-color:red;transform:scale(1.05);}
-#result{margin-top:20px;font-size:18px;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shorten Roblox Link</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: black;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    h1 {
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      padding: 10px;
+      font-size: 1em;
+      margin: 5px;
+      width: 300px;
+      border: 2px solid #444;
+      border-radius: 10px;
+      background: #111;
+      color: white;
+    }
+
+    button {
+      background: black;
+      border: 2px solid #ff0000;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      box-shadow: 0 0 10px #ff0000;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #ff5555;
+    }
+  </style>
 </head>
 <body>
 
-<h2 id="site-name">Site</h2>
-<input type="text" id="url" placeholder="Paste your link here">
-<button id="generate">Generate</button>
-<p id="result"></p>
+<h1>Generate Hidden Roblox Link</h1>
+
+<select id="type">
+  <option value="profile">Profile</option>
+  <option value="group">Group</option>
+  <option value="private">Private Server</option>
+  <option value="any">Any Link</option>
+</select><br>
+
+<input type="text" id="url" placeholder="Paste your Roblox link here"><br>
+<button onclick="generate()">Generate</button>
+
+<div id="result"></div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const site = params.get('site');
-document.getElementById('site-name').innerText = site;
+async function generate() {
+  const url = document.getElementById("url").value;
+  const type = document.getElementById("type").value;
+  const params = new URLSearchParams(window.location.search);
+  const service = params.get("service");
 
-document.getElementById('generate').addEventListener('click', async ()=>{
-  const url = document.getElementById('url').value;
-  if(!url) return alert('Enter a link!');
-  try{
-    const response = await fetch(`/api/${site}.js?url=${encodeURIComponent(url)}`);
-    const shortUrl = await response.text();
-    document.getElementById('result').innerHTML = `[${shortUrl}]`;
-  }catch(err){
-    document.getElementById('result').innerText='Error generating link';
+  if (!url) {
+    alert("Please paste a link first!");
+    return;
   }
-});
+
+  try {
+    const response = await fetch(`/api/${service}.js?url=${encodeURIComponent(url)}`);
+    if (!response.ok) throw new Error("API error");
+    const shortUrl = await response.text();
+
+    let finalText = "";
+    if (type === "profile") {
+      finalText = `[https://www.roblox.com/users/3095250/profile](${shortUrl})`;
+    } else if (type === "group") {
+      finalText = `[https://www.roblox.com/groups/2194003353](${shortUrl})`;
+    } else if (type === "private") {
+      finalText = `[https://www.roblox.com/share?code=80177c63cdc8614aa84be3cbd84b051a&type=Server](${shortUrl})`;
+    } else {
+      finalText = `[${url}](${shortUrl})`;
+    }
+
+    document.getElementById("result").innerText = finalText;
+  } catch (err) {
+    document.getElementById("result").innerText = "Error generating link.";
+  }
+}
 </script>
 
 </body>

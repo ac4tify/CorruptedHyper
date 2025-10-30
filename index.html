@@ -8,7 +8,6 @@
     html, body {
       margin: 0;
       height: 100%;
-      overflow: hidden;
       background-color: black;
       color: white;
       font-family: 'Poppins', sans-serif;
@@ -16,21 +15,22 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
 
-    /* Fundal animat cu linii (efect laser) */
     canvas#laserBackground {
       position: fixed;
-      top: 0; left: 0;
+      inset: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
+      background: black;
     }
 
     h1 {
-      font-size: 3em;
+      font-size: 2.5em;
       color: #ff0000;
-      text-shadow: 0 0 10px #ff0000;
+      text-shadow: 0 0 15px #ff0000;
       margin-bottom: 20px;
     }
 
@@ -47,10 +47,10 @@
       color: white;
       padding: 15px 40px;
       font-size: 1.2em;
-      border-radius: 15px;
+      border-radius: 20px;
       transition: all 0.3s ease;
       cursor: pointer;
-      width: 220px;
+      width: 240px;
     }
 
     button:hover {
@@ -70,7 +70,6 @@
       color: #888;
     }
 
-    /* Efect de apariție (intro) */
     #intro {
       position: fixed;
       inset: 0;
@@ -80,8 +79,9 @@
       align-items: center;
       justify-content: center;
       font-size: 3em;
-      animation: fadeOut 2.5s ease forwards;
+      animation: fadeOut 2.8s ease forwards;
       z-index: 999;
+      text-shadow: 0 0 20px red;
     }
 
     @keyframes fadeOut {
@@ -93,8 +93,7 @@
 </head>
 <body>
 
-<div id="intro">CORRUPT</div>
-
+<div id="intro">⚡ CORRUPT ⚡</div>
 <canvas id="laserBackground"></canvas>
 
 <h1>Hide & Shorten Your Roblox Links</h1>
@@ -117,33 +116,43 @@ function openShortener(service) {
   window.location.href = `shortener.html?service=${service}`;
 }
 
-// fundal cu linii (efect laser)
 const canvas = document.getElementById('laserBackground');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
 const points = [];
-for (let i = 0; i < 50; i++) {
-  points.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, dx: (Math.random()-0.5)*1.5, dy:(Math.random()-0.5)*1.5});
+for (let i = 0; i < 60; i++) {
+  points.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    dx: (Math.random() - 0.5) * 1.5,
+    dy: (Math.random() - 0.5) * 1.5
+  });
 }
 
 function draw() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.strokeStyle = 'rgba(255,0,0,0.4)';
   ctx.lineWidth = 1;
-  for (let i=0;i<points.length;i++){
+  for (let i = 0; i < points.length; i++) {
     const p = points[i];
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width)p.dx*=-1;
-    if(p.y<0||p.y>canvas.height)p.dy*=-1;
-    for(let j=i+1;j<points.length;j++){
-      const q=points[j];
-      const dist=Math.hypot(p.x-q.x,p.y-q.y);
-      if(dist<150){
+    p.x += p.dx;
+    p.y += p.dy;
+    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    for (let j = i + 1; j < points.length; j++) {
+      const q = points[j];
+      const dist = Math.hypot(p.x - q.x, p.y - q.y);
+      if (dist < 140) {
         ctx.beginPath();
-        ctx.moveTo(p.x,p.y);
-        ctx.lineTo(q.x,q.y);
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
         ctx.stroke();
       }
     }
@@ -152,6 +161,5 @@ function draw() {
 }
 draw();
 </script>
-
 </body>
 </html>

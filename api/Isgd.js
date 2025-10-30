@@ -1,7 +1,9 @@
 export default async function handler(req, res) {
   try {
     const url = req.query.url;
-    if (!url) return res.status(400).send('Missing URL');
+    if (!url) {
+      return res.status(400).send('Missing URL');
+    }
 
     const apiUrl = `https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`;
     const response = await fetch(apiUrl);

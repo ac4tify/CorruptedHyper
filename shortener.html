@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shorten Roblox Link</title>
+  <title>CORRUPT | Shorten Roblox Link</title>
   <style>
     body {
       margin: 0;
@@ -22,6 +22,7 @@
       color: #ff0000;
       text-shadow: 0 0 10px #ff0000;
       margin-bottom: 20px;
+      text-align: center;
     }
 
     input, select {
@@ -33,80 +34,109 @@
       border-radius: 10px;
       background: #111;
       color: white;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #ff0000;
+      box-shadow: 0 0 10px #ff0000;
     }
 
     button {
       background: black;
       border: 2px solid #ff0000;
       color: white;
-      padding: 10px 20px;
-      border-radius: 10px;
+      padding: 10px 25px;
+      border-radius: 12px;
       cursor: pointer;
       margin-top: 15px;
       transition: 0.3s;
+      font-size: 1em;
     }
 
     button:hover {
       box-shadow: 0 0 10px #ff0000;
+      transform: scale(1.05);
     }
 
     #result {
       margin-top: 20px;
       font-size: 1.1em;
       color: #ff5555;
+      word-break: break-all;
+      text-align: center;
+    }
+
+    a.back {
+      color: #ff0000;
+      text-decoration: none;
+      margin-top: 30px;
+      transition: 0.3s;
+    }
+
+    a.back:hover {
+      text-shadow: 0 0 10px #ff0000;
     }
   </style>
 </head>
 <body>
 
-<h1>Generate Hidden Roblox Link</h1>
+  <h1>Generate Hidden Roblox Link</h1>
 
-<select id="type">
-  <option value="profile">Profile</option>
-  <option value="group">Group</option>
-  <option value="private">Private Server</option>
-  <option value="any">Any Link</option>
-</select><br>
+  <select id="type">
+    <option value="profile">Profile</option>
+    <option value="group">Group</option>
+    <option value="private">Private Server</option>
+    <option value="any">Any Link</option>
+  </select><br>
 
-<input type="text" id="url" placeholder="Paste your Roblox link here"><br>
-<button onclick="generate()">Generate</button>
+  <input type="text" id="url" placeholder="Paste your Roblox link here"><br>
+  <button onclick="generate()">Generate</button>
 
-<div id="result"></div>
+  <div id="result"></div>
 
-<script>
-async function generate() {
-  const url = document.getElementById("url").value;
-  const type = document.getElementById("type").value;
-  const params = new URLSearchParams(window.location.search);
-  const service = params.get("service");
+  <a class="back" href="index.html">← Back to Home</a>
 
-  if (!url) {
-    alert("Please paste a link first!");
-    return;
-  }
+  <script>
+    async function generate() {
+      const url = document.getElementById("url").value.trim();
+      const type = document.getElementById("type").value;
+      const params = new URLSearchParams(window.location.search);
+      const service = params.get("service");
 
-  try {
-    const response = await fetch(`/api/${service}.js?url=${encodeURIComponent(url)}`);
-    if (!response.ok) throw new Error("API error");
-    const shortUrl = await response.text();
+      if (!url) {
+        alert("⚠️ Please paste a Roblox link first!");
+        return;
+      }
 
-    let finalText = "";
-    if (type === "profile") {
-      finalText = `[https://www.roblox.com/users/3095250/profile](${shortUrl})`;
-    } else if (type === "group") {
-      finalText = `[https://www.roblox.com/groups/2194003353](${shortUrl})`;
-    } else if (type === "private") {
-      finalText = `[https://www.roblox.com/share?code=80177c63cdc8614aa84be3cbd84b051a&type=Server](${shortUrl})`;
-    } else {
-      finalText = `[${url}](${shortUrl})`;
+      try {
+        // ✅ corect pentru Vercel — fără .js la final!
+        const response = await fetch(`/api/${service}?url=${encodeURIComponent(url)}`);
+
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}`);
+        }
+
+        const shortUrl = (await response.text()).trim();
+
+        let finalText = "";
+        if (type === "profile") {
+          finalText = `[Roblox Profile](${shortUrl})`;
+        } else if (type === "group") {
+          finalText = `[Roblox Group](${shortUrl})`;
+        } else if (type === "private") {
+          finalText = `[Private Server Invite](${shortUrl})`;
+        } else {
+          finalText = `[Your Link](${shortUrl})`;
+        }
+
+        document.getElementById("result").innerText = finalText;
+      } catch (err) {
+        console.error(err);
+        document.getElementById("result").innerText = "❌ Error generating link: " + err.message;
+      }
     }
-
-    document.getElementById("result").innerText = finalText;
-  } catch (err) {
-    document.getElementById("result").innerText = "Error generating link.";
-  }
-}
-</script>
-
+  </script>
 </body>
 </html>

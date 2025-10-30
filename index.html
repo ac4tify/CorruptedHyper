@@ -1,147 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Corrupted - Link Shortener</title>
-<style>
-body {
-  margin:0;
-  font-family: Arial, sans-serif;
-  color:#fff;
-  overflow-x:hidden;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CORRUPT | Roblox Link Shortener</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background-color: black;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-#laser-bg {
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:-1;
-}
+    /* Fundal animat cu linii (efect laser) */
+    canvas#laserBackground {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
 
-/* Animatie de fade la incarcare */
-.fade-in {
-  opacity:0;
-  animation: fadeIn 2s forwards;
-}
-@keyframes fadeIn {
-  to {opacity:1;}
-}
+    h1 {
+      font-size: 3em;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000;
+      margin-bottom: 20px;
+    }
 
-/* Butoane */
-.shorteners {
-  display:flex;
-  gap:15px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-top:120px;
-}
-.shorteners button{
-  padding:15px 25px;
-  border-radius:25px;
-  border:2px solid #ccc;
-  background:#000;
-  color:#fff;
-  font-size:16px;
-  cursor:pointer;
-  transition: all 0.3s ease;
-}
-.shorteners button:hover{
-  border-color:red;
-  transform:scale(1.05);
-}
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
 
-/* Titlu */
-h1{
-  text-align:center;
-  font-size:48px;
-  margin-top:50px;
-  text-shadow: 0 0 10px red;
-}
+    button {
+      background: black;
+      border: 2px solid #444;
+      color: white;
+      padding: 15px 40px;
+      font-size: 1.2em;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      width: 220px;
+    }
 
-/* Join Discord */
-#join-discord{
-  display:block;
-  margin:50px auto;
-  padding:15px 30px;
-  font-size:18px;
-  border:2px solid #fff;
-  border-radius:25px;
-  background:transparent;
-  color:#fff;
-  text-decoration:none;
-  text-align:center;
-  width:250px;
-  transition: all 0.3s ease;
-}
-#join-discord:hover{
-  border-color:red;
-  color:red;
-}
-</style>
+    button:hover {
+      border-color: #ff0000;
+      box-shadow: 0 0 10px #ff0000;
+      transform: scale(1.05);
+    }
+
+    .recommanded {
+      border-color: #ff0000;
+      box-shadow: 0 0 10px #ff0000;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    /* Efect de apariție (intro) */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3em;
+      animation: fadeOut 2.5s ease forwards;
+      z-index: 999;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+  </style>
 </head>
-<body class="fade-in">
+<body>
 
-<canvas id="laser-bg"></canvas>
+<div id="intro">CORRUPT</div>
 
-<h1>CORRUPTED</h1>
-<div class="shorteners">
-  <button onclick="window.location='shortener.html?site=isgd'">is.gd (Recommended)</button>
-  <button onclick="window.location='shortener.html?site=tinyurl'">TinyURL</button>
-  <button onclick="window.location='shortener.html?site=bitly'">Bitly</button>
-  <button onclick="window.location='shortener.html?site=rebrandly'">Rebrand.ly</button>
-  <button onclick="window.location='shortener.html?site=cuttly'">Cutt.ly</button>
-  <button onclick="window.location='shortener.html?site=clickly'">Click.ly</button>
-  <button onclick="window.location='shortener.html?site=tinycc'">Tiny.cc</button>
-  <button onclick="window.location='shortener.html?site=shorterme'">Shorter.me</button>
+<canvas id="laserBackground"></canvas>
+
+<h1>Hide & Shorten Your Roblox Links</h1>
+
+<div class="button-container">
+  <button class="recommanded" onclick="openShortener('isgd')">is.gd (recommended)</button>
+  <button onclick="openShortener('tinyurl')">TinyURL</button>
+  <button onclick="openShortener('bitly')">Bitly</button>
+  <button onclick="openShortener('rebrandly')">Rebrand.ly</button>
+  <button onclick="openShortener('cuttly')">Cutt.ly</button>
+  <button onclick="openShortener('clickly')">Click.ly</button>
+  <button onclick="openShortener('tinycc')">Tiny.cc</button>
+  <button onclick="openShortener('shorterme')">Shorter.me</button>
 </div>
 
-<a id="join-discord" href="https://discord.gg/6rseCfGMa" target="_blank">JOIN OUR DISCORD</a>
+<footer>Join our <a href="https://discord.gg/6rseCfGMa" style="color:#ff0000;">Discord</a></footer>
 
 <script>
-// Fundal laser rosu
-const canvas = document.getElementById('laser-bg');
+function openShortener(service) {
+  window.location.href = `shortener.html?service=${service}`;
+}
+
+// fundal cu linii (efect laser)
+const canvas = document.getElementById('laserBackground');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let points = [];
-for (let i = 0; i < 100; i++) {
-    points.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, dx: (Math.random()-0.5)*0.5, dy: (Math.random()-0.5)*0.5});
+const points = [];
+for (let i = 0; i < 50; i++) {
+  points.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, dx: (Math.random()-0.5)*1.5, dy:(Math.random()-0.5)*1.5});
 }
 
-function animate() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = 'rgba(255,0,0,0.3)';
-    points.forEach(p => {
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.strokeStyle = 'rgba(255,0,0,0.4)';
+  ctx.lineWidth = 1;
+  for (let i=0;i<points.length;i++){
+    const p = points[i];
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    for(let j=i+1;j<points.length;j++){
+      const q=points[j];
+      const dist=Math.hypot(p.x-q.x,p.y-q.y);
+      if(dist<150){
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
-        ctx.fill();
-    });
-    ctx.strokeStyle = 'rgba(255,0,0,0.1)';
-    for (let i=0;i<points.length;i++){
-        for(let j=i+1;j<points.length;j++){
-            let dx = points[i].x - points[j].x;
-            let dy = points[i].y - points[j].y;
-            let dist = Math.sqrt(dx*dx + dy*dy);
-            if(dist<100){
-                ctx.beginPath();
-                ctx.moveTo(points[i].x, points[i].y);
-                ctx.lineTo(points[j].x, points[j].y);
-                ctx.stroke();
-            }
-        }
+        ctx.moveTo(p.x,p.y);
+        ctx.lineTo(q.x,q.y);
+        ctx.stroke();
+      }
     }
-    points.forEach(p => {
-        p.x += p.dx;
-        p.y += p.dy;
-        if(p.x<0||p.x>canvas.width)p.dx*=-1;
-        if(p.y<0||p.y>canvas.height)p.dy*=-1;
-    });
-    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(draw);
 }
-animate();
+draw();
 </script>
 
 </body>
